@@ -1,0 +1,51 @@
+<div class="page-header">
+
+</div>
+
+<!-- LOADING MESSAGE -->
+<div class="jumbotron text-center" ng-show="products.processing">
+  <span class="glyphicon glyphicon-repeat spinner"></span>
+  <p>Loading Products...</p>
+</div>
+
+<!-- LOOP OVER THE PRODUCTS -->
+<div ng-repeat="product in products.products track by $index">
+  <div class="col-sm-6">
+    <div class="productTitle">{{ product.title }}</div>
+    <div class="productImg pull-left"><img ng-src="http://smktesting.herokuapp.com/static/{{ product.img }}"></img></div>
+    <div class="productText" class="productText">{{ product.text }}</div>
+  </div>
+
+  <!--  Product Reviews List -->
+<div class="col-sm-6">
+  <ul>
+    <button class="btn btn-primary" ng-click="products.getReviews(product.id)">Open Reviews</button>
+    <button class="btn btn-danger pull-right" ng-click="products.reviews = {}">Close Reviews</button>
+    <li ng-repeat="review in products.reviews | filter:search" ng-if="review.product == product.id">
+      <blockquote>
+        <strong class="rate">{{review.rate}} Stars</strong>
+        <p>
+          {{review.text}}
+        </p>
+        <cite class="clearfix">Created by: {{review.created_by.username}}</cite>
+        <cite class="clearfix">Contact me: {{review.created_by.email}}</cite>
+      </blockquote>
+    </li>
+  </ul>
+  <form name="reviewForm" ng-submit="products.addReview(product.reviewRate,product.reviewText,product.id)">
+    <!--  Review Form -->
+    <h4>Submit a Review</h4>
+    <fieldset class="form-group">
+      <select ng-model="product.reviewRate" class="form-control" ng-options="stars for stars in [5,4,3,2,1]" title="Stars">
+        <option value>Rate the Product</option>
+      </select>
+    </fieldset>
+    <fieldset class="form-group">
+      <textarea ng-model="product.reviewText" class="form-control" placeholder="Write a short review of the product..." title="Review"></textarea>
+    </fieldset>
+    <fieldset class="form-group">
+      <input type="submit" class="btn btn-primary pull-right" value="Submit Review" />
+    </fieldset>
+  </form>
+</div>
+</div>

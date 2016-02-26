@@ -1,0 +1,10 @@
+{
+  "name": "LightIT_app",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "*",
+    "express": "^4.13.3",
+    "jsonwebtoken": "^5.5.4",
+    "morgan": "~1.5.0"
+  }
+}
